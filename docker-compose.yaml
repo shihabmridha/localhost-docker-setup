@@ -15,6 +15,7 @@ services:
   mysql:
     container_name: MySQL
     image: mysql:8.0.36-bookworm
+    platform: linux/x86_64
     ports:
       - 3306:3306
     volumes:
@@ -22,6 +23,18 @@ services:
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Password0
+
+  mongo:
+    container_name: MongoDB
+    image: mongo:7.0.8-jammy
+    ports:
+      - 27017:27017
+    volumes:
+      - mongo:/data/db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: Password0
 
   ubuntu:
     container_name: Ubuntu-SSH
@@ -35,4 +48,5 @@ services:
 volumes:
   mssql:
   mysql:
+  mongo:
   ubuntu:
