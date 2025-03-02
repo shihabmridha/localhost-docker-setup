@@ -1,12 +1,12 @@
 services:
   mssql:
     container_name: MSSQL
-    image: mcr.microsoft.com/mssql/server:2022-CU12-ubuntu-22.04
+    image: mcr.microsoft.com/mssql/server:2022-CU17-ubuntu-22.04
     user: root
     ports:
       - 1433:1433
     volumes:
-      - mssql:/var/opt/mssql/data
+      - ./volumes/mssql:/var/opt/mssql/data
     restart: always
     environment:
       MSSQL_SA_PASSWORD: Password0
@@ -14,27 +14,47 @@ services:
 
   mysql:
     container_name: MySQL
-    image: mysql:8.0.36-bookworm
+    image: mysql:8.0.41-debian
     platform: linux/x86_64
     ports:
       - 3306:3306
     volumes:
-      - mysql:/var/lib/mysql
+      - ./volumes/mysql:/var/lib/mysql
     restart: always
     environment:
       MYSQL_ROOT_PASSWORD: Password0
 
+  postgres:
+    container_name: Postgres
+    image: postgres:17.4-alpine3.21
+    ports:
+      - 5432:5432
+    volumes:
+      - ./volumes/postgres:/var/lib/postgresql/data
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: Password0
+      PGDATA: /var/lib/postgresql/data/pgdata
+
   mongo:
     container_name: MongoDB
-    image: mongo:7.0.8-jammy
+    image: mongo:8.0.5-noble
     ports:
       - 27017:27017
     volumes:
-      - mongo:/data/db
+      - ./volumes/mongo:/data/db
     restart: always
     environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: Password0
+
+  redis:
+    container_name: Redis
+    image: redis:7.4.2-alpine3.21
+    ports:
+      - 6379:6379
+    volumes:
+      - ./volumes/redis:/data
 
   ubuntu:
     container_name: Ubuntu-SSH
@@ -44,9 +64,3 @@ services:
     ports:
       - 22:22
       - 80:80
-
-volumes:
-  mssql:
-  mysql:
-  mongo:
-  ubuntu:
