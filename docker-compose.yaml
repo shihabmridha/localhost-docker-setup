@@ -14,8 +14,7 @@ services:
 
   mysql:
     container_name: MySQL
-    image: mysql:8.0.41-debian
-    platform: linux/x86_64
+    image: mysql:8.4.8
     ports:
       - 3306:3306
     volumes:
@@ -26,7 +25,7 @@ services:
 
   postgres:
     container_name: Postgres
-    image: postgres:17.4-alpine3.21
+    image: postgres:18.1-alpine
     ports:
       - 5432:5432
     volumes:
@@ -50,7 +49,7 @@ services:
 
   redis:
     container_name: Redis
-    image: redis:7.4.2-alpine3.21
+    image: redis:8.4.0-alpine
     ports:
       - 6379:6379
     volumes:
