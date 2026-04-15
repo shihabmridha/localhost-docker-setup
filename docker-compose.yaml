@@ -35,6 +35,18 @@ services:
       POSTGRES_PASSWORD: Password0
       PGDATA: /var/lib/postgresql/data/pgdata
 
+  drizzle:
+    image: ghcr.io/drizzle-team/gateway:latest
+    container_name: drizzle
+    restart: always
+    ports:
+      - "4983:4983"
+    environment:
+      PORT: "4983"
+      MASTERPASS: Password0
+    volumes:
+      - ./volumes/drizzle:/app
+
   mongo:
     container_name: MongoDB
     image: mongo:8.0.5-noble
